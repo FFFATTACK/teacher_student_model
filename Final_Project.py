@@ -163,11 +163,11 @@ if __name__ == '__main__':
     pyramidnet.eval()
 
     #set student model
-    CNN5LAYER_1 = simplecnn().cuda()
-    CNN7LAYER   = simplecnn2().cuda()
-    CNN4LAYER   = simplecnn3().cuda()
-    CNN5LAYER_2 = simplecnn4().cuda()
-    MLPLAYER    = simplemlp().cuda()
+    CNN5LAYER = simplecnn().cuda()
+    CNN7LAYER = simplecnn2().cuda()
+    MLPLAYER  = simplemlp().cuda()
+    CNN4LAYER_wider = simplecnn3().cuda()
+    CNN4LAYER_narrower = simplecnn1().cuda()
 
 
     # Hyperparameters
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     #################### Hyperparameters ####################
     
 
-    ### example of running one sample
+    ### Example of running one sample
     ### use CNN7LAYER as student and densenet as teacher
     student_net = CNN7LAYER
     teacher_net = densenet

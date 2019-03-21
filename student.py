@@ -36,6 +36,30 @@ class SimpleCNN(nn.Module):
 def simplecnn():
     return SimpleCNN()
 
+#4 layer CNN narrower
+class SimpleCNN1(nn.Module):
+    def __init__(self, num_classes=10):
+        super(SimpleCNN1, self).__init__()
+        hidden_dim = 64 * 4 * 4
+        self.feature = nn.Sequential(
+            nn.Conv2d(in_channels=3, out_channels=16, kernel_size=(3, 3), stride=2, padding=1, dilation=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3, 3), stride=2, padding=1, dilation=1),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3, 3), stride=2, padding=1, dilation=1),
+            nn.ReLU(),
+        )
+        self.classifier = nn.Sequential(
+            nn.Linear(hidden_dim, num_classes)
+        )
+
+    def forward(self, x):
+        x = self.feature(x)
+        x = x.view(x.shape[0], -1)
+        return self.classifier(x)
+def simplecnn1():
+    return SimpleCNN1()
+
 ##7-layer CNN
 class SimpleCNN2(nn.Module):
     def __init__(self, num_classes=10):
@@ -72,7 +96,7 @@ class SimpleCNN2(nn.Module):
 def simplecnn2():
     return SimpleCNN2()
 
-#4-layer cnn
+#4-layer cnn wider
 class SimpleCNN3(nn.Module):
     def __init__(self, num_classes=10):
         super(SimpleCNN3, self).__init__()
@@ -99,35 +123,7 @@ class SimpleCNN3(nn.Module):
 def simplecnn3():
     return SimpleCNN3()
 
-class SimpleCNN4(nn.Module):
-    def __init__(self, num_classes=10):
-        super(SimpleCNN4, self).__init__()
-        hidden_dim = 64 * 4 * 4
-        self.feature = nn.Sequential(
-            # 3*32*32
-            nn.Conv2d(in_channels=3, out_channels=64, kernel_size=(4, 4), stride=2, padding=1), # (4*4*3+1)*64=3136
-            nn.ReLU(),
-            # 64*16*16
-            nn.Conv2d(in_channels=64, out_channels=8, kernel_size=(4, 4), stride=2, padding=1), # (4*4*64+1)*8=8192
-            nn.ReLU(),
-            # 128*8*8
-            nn.Conv2d(in_channels=8, out_channels=64, kernel_size=(4, 4), stride=2, padding=1), # (4*4*8+1)*64=8192
-            nn.ReLU(),
-            # 64*4*4
-    
-        )
-        self.classifier = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, num_classes)
-        )
 
-    def forward(self, x):
-        x = self.feature(x)
-        x = x.view(x.shape[0], -1)
-        return self.classifier(x)
-def simplecnn4():
-    return SimpleCNN4()
 
 # MLP
 class SimpleMLP(nn.Module):
